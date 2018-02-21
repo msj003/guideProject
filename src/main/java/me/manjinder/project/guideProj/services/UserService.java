@@ -14,9 +14,23 @@ public class UserService {
 		try {
 			usersList=rdbUser.findAll();
 		}catch(Exception e) {
-			
+			System.out.println(e);
 		}
-	System.out.println("YUser Service "+usersList.get(0).getEmail());
+// 	System.out.println("YUser Service "+usersList.get(0).getEmail());
 		return usersList; 
 	}
+	
+	
+	public static User getUserByName(String userName) {
+		User user =null;
+		RdbUserImpl rdbUser = new RdbUserImpl();
+		try {
+			user=rdbUser.findByUsername(userName);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		System.out.println("Single user "+user.getEmail());
+		return user;
+	}
+	
 }

@@ -1,6 +1,7 @@
 package me.manjinder.project.guideProj.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import me.manjinder.project.guideProj.model.User;
 public class RdbUserImpl implements UserDao {
 
 	private Statement statement = null;
+	private PreparedStatement prepStmt = null;
 	private ResultSet resultSet = null;
 	private Connection conn =null;
 	private int id;
@@ -47,9 +49,27 @@ public class RdbUserImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> findByUsername() {
+	public User findByUsername(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		User user =null;
+		try {
+			conn =  RdbConnection.createConnection();
+			prepStmt = conn.prepareStatement("select * from logins,users where logins.id=users.logins_id and username=?");
+			prepStmt.setString(1, username);
+			resultSet = prepStmt
+                    .executeQuery();
+			while(resultSet.next()) {
+				id= resultSet.getInt(1);
+				firstName= resultSet.getString(5);
+				lastName=resultSet.getString(6);
+				userType=resultSet.getString(8);
+				email=resultSet.getString(7);
+				 user = new User(id, firstName, lastName, userType, email);
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return user;
 	}
 
 	@Override

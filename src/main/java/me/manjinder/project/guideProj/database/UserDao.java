@@ -6,7 +6,7 @@ import me.manjinder.project.guideProj.model.User;
 //@ Manjinder Singh - manjindersingh.me
 interface UserDao {
 	List<User> findAll();
-    List<User> findByUsername();
+    User findByUsername(String username);
     List<User> findByEmail();
     
     boolean insertUser(User user);
