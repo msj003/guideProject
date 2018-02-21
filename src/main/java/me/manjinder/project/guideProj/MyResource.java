@@ -1,4 +1,4 @@
-package me.manjinder.project.guideapi;
+package me.manjinder.project.guideProj;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
