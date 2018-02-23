@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class User {
 	private int id;
+	private String username;
+	private String pass;
 	private String firstName;
 	private String lastName;
 	private String userType;
@@ -15,13 +17,43 @@ public class User {
 	public User() {
 		
 	}
-	public User(int id, String firstName, String lastName, String userType, String email) {
+	
+	
+	//Constructor with Password field to be used only for user password operations
+	public User(int id, String username, String pass, String firstName, String lastName, String userType,
+			String email) {
 		super();
 		this.id = id;
+		this.username = username;
+		this.pass = pass;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userType = userType;
 		this.email = email;
+	}
+
+	//Regular constructor. Objects do not have any sensitive information.
+	public User(int id, String username, String firstName, String lastName, String userType, String email) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userType = userType;
+		this.email = email;
+	}
+	
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public int getId() {
 		return id;

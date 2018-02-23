@@ -21,6 +21,7 @@ public class RdbUserImpl implements UserDao {
 	private String lastName;
 	private String userType;
 	private String email;
+	private String username;
 	
 	
 	@Override
@@ -34,11 +35,12 @@ public class RdbUserImpl implements UserDao {
                     .executeQuery("select * from logins,users where logins.id=users.logins_id;");
 			while(resultSet.next()) {
 				id= resultSet.getInt(1);
+				username= resultSet.getString(2);
 				firstName= resultSet.getString(5);
 				lastName=resultSet.getString(6);
 				userType=resultSet.getString(8);
 				email=resultSet.getString(7);
-				User user = new User(id, firstName, lastName, userType, email);
+				User user = new User(id, username,firstName, lastName, userType, email);
 				allUsers.add(user);
 				
 			}
@@ -60,11 +62,12 @@ public class RdbUserImpl implements UserDao {
                     .executeQuery();
 			while(resultSet.next()) {
 				id= resultSet.getInt(1);
+				username= resultSet.getString(2);
 				firstName= resultSet.getString(5);
 				lastName=resultSet.getString(6);
 				userType=resultSet.getString(8);
 				email=resultSet.getString(7);
-				 user = new User(id, firstName, lastName, userType, email);
+				user = new User(id,username, firstName, lastName, userType, email);
 			}
 		}catch(Exception e) {
 			System.out.println(e);
@@ -81,6 +84,35 @@ public class RdbUserImpl implements UserDao {
 	@Override
 	public boolean insertUser(User user) {
 		// TODO Auto-generated method stub
+		try {
+			conn =  RdbConnection.createConnection();
+			
+			// Inserting into logins table. 
+			
+			prepStmt = conn.prepareStatement("INSERT into logins(username,password) values(?,?);");
+			prepStmt.setString(1, user.getUsername());
+			prepStmt.setString(2,user.getPass());
+			prepStmt.executeUpdate();
+			
+			//To get the auto-incremented id from logins table and insert as foreign key to users table
+
+			prepStmt=conn.prepareStatement("Select id from logins where username=?;");
+			prepStmt.setString(1, user.getUsername());
+			resultSet=prepStmt.executeQuery();
+			int id=1;
+			while(resultSet.next()) {
+				id = resultSet.getInt(1);	
+			}
+			prepStmt = conn.prepareStatement("INSERT into users(first_name,last_name,email,type,logins_id) values(?,?,?,?,?);");
+			prepStmt.setString(1, user.getFirstName());
+			prepStmt.setString(2, user.getLastName());
+			prepStmt.setString(3, user.getEmail());
+			prepStmt.setString(4, user.getUserType());
+			prepStmt.setInt(5, id);
+			prepStmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 		return false;
 	}
 

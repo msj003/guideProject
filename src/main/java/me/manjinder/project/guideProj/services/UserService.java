@@ -8,7 +8,7 @@ import me.manjinder.project.guideProj.model.User;
 
 public class UserService {
 
-	public static List<User> getAllUsers(){
+	public List<User> getAllUsers(){
 		List<User> usersList = new ArrayList<User>();
 		RdbUserImpl rdbUser = new RdbUserImpl();
 		try {
@@ -21,7 +21,7 @@ public class UserService {
 	}
 	
 	
-	public static User getUserByName(String userName) {
+	public User getUserByName(String userName) {
 		User user =null;
 		RdbUserImpl rdbUser = new RdbUserImpl();
 		try {
@@ -29,8 +29,18 @@ public class UserService {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-		System.out.println("Single user "+user.getEmail());
+	//	System.out.println("Single user "+user.getEmail());
 		return user;
+	}
+	
+	public void addUser(User user) {
+		RdbUserImpl rdbUser = new RdbUserImpl();
+		try {
+			rdbUser.insertUser(user);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
 	}
 	
 }
