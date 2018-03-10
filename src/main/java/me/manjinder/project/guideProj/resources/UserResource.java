@@ -33,10 +33,26 @@ public class UserResource {
 		return userService.getUserByName(username);
 	}
 	
+	@GET
+	@Path("/guides")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getGuideUsers(){
+		return userService.getGuides();
+	}
+	
+	@GET
+	@Path("/travlers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getTravllerUsers(){
+		return userService.getTravelers();
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addUser(User user) {
 		userService.addUser(user);
 	}
+	
+	
 
 }

@@ -18,7 +18,6 @@ public class User {
 		
 	}
 	
-	
 	//Constructor with Password field to be used only for user password operations
 	public User(int id, String username, String pass, String firstName, String lastName, String userType,
 			String email) {
@@ -85,8 +84,4 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
-
 }

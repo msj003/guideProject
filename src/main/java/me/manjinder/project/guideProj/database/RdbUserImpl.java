@@ -42,7 +42,6 @@ public class RdbUserImpl implements UserDao {
 				email=resultSet.getString(7);
 				User user = new User(id, username,firstName, lastName, userType, email);
 				allUsers.add(user);
-				
 			}
 		}catch(Exception e) {
 			System.out.println(e);
@@ -75,6 +74,31 @@ public class RdbUserImpl implements UserDao {
 		return user;
 	}
 
+	public List<User> findUserBytype(String type){
+		List<User> usersByType = new ArrayList<User>();
+		try {
+			conn =  RdbConnection.createConnection();
+			conn =  RdbConnection.createConnection();
+			prepStmt = conn.prepareStatement("select * from logins,users where logins.id=users.logins_id and users.type=?");
+			prepStmt.setString(1, type);
+			resultSet = prepStmt
+                    .executeQuery();
+			while(resultSet.next()) {
+				id= resultSet.getInt(1);
+				username= resultSet.getString(2);
+				firstName= resultSet.getString(5);
+				lastName=resultSet.getString(6);
+				userType=resultSet.getString(8);
+				email=resultSet.getString(7);
+				User user = new User(id, username,firstName, lastName, userType, email);
+				usersByType.add(user);
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return usersByType;
+		
+	}
 	@Override
 	public List<User> findByEmail() {
 		// TODO Auto-generated method stub

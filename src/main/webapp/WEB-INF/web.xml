@@ -5,6 +5,10 @@
     <servlet>
         <servlet-name>Jersey Web Application</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+         <init-param>
+        	<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+        	<param-value>me.manjinder.project.guideProj.filter.CrossDomainFilter</param-value>
+    </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>me.manjinder.project.guideProj</param-value>

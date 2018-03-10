@@ -16,7 +16,6 @@ public class UserService {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-// 	System.out.println("YUser Service "+usersList.get(0).getEmail());
 		return usersList; 
 	}
 	
@@ -29,8 +28,29 @@ public class UserService {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-	//	System.out.println("Single user "+user.getEmail());
 		return user;
+	}
+	
+	public List<User> getGuides(){
+		List<User> usersList = new ArrayList<User>();
+		RdbUserImpl rdbUser = new RdbUserImpl();
+		try {
+			usersList=rdbUser.findUserBytype("G");  // Guide Users have type G.
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return usersList; 
+	}
+	
+	public List<User> getTravelers(){
+		List<User> usersList = new ArrayList<User>();
+		RdbUserImpl rdbUser = new RdbUserImpl();
+		try {
+			usersList=rdbUser.findUserBytype("T");  // Traveler Users have type T.
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return usersList; 
 	}
 	
 	public void addUser(User user) {
